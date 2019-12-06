@@ -19,12 +19,27 @@ def proof_of_work(last_proof):
     - p is the previous proof, and p' is the new proof
     - Use the same method to generate SHA-256 hashes as the examples in class
     """
+    """My Project code
+    block_string = json.dumps(last_block, sort_keys=True)
+    proof = 0
+    while valid_proof(block_string, proof) is False:
+        proof +=1
 
+    return proof
+
+    I need to get a new hash
+    I need to check if its a valid proof #gonna be doing this in valid proof
+        prev_hash last 6 = new_hash first 6
+    I need to pass values for the valid proof
+    """
     start = timer()
 
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
+    prev_hash = hashlib.sha256(f'{last_proof}'.encode()).hexdigest()
+    while valid_proof(prev_hash, proof) is False:
+        proof +=1
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -38,10 +53,22 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
+    """My Project code
+    guess = f'{block_string}{proof}'.encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+
+    return guess_hash[:DIFFICULTY] == '0' * DIFFICULTY
+
+    I need to check if its a valid proof
+        last_hash last 6 = guess_hash first 6
+
+    """
+
 
     # TODO: Your code here!
-    pass
-
+    guess = f'{proof}'.encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    return last_hash[-6:] == guess_hash[:6]
 
 if __name__ == '__main__':
     # What node are we interacting with?

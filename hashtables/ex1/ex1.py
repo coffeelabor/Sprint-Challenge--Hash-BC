@@ -10,7 +10,7 @@ def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
     """
-    YOUR CODE HERE
+   I need to iterate throught the weights.  Looks like the output is index of the wieghts that add to the limit.  I need to compare the two values that equal the limit and put the largest one first in the tuple
     """
 
     return None
