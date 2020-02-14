@@ -25,6 +25,8 @@ def proof_of_work(last_proof):
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
+    while valid_proof(prev_hash, proof) is False:
+        proof +=1 
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -40,7 +42,12 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
+    # Format the old hash
+    old_hash_encode = f'{last_hash}'.encode()
+    old_hash_hash = hashlib.sha256()
+
+    guess_encode = f'{prev_hash}{proof}'.encode()
+    guess_hash = hashlib.sha256(guess_encode).hexidigest
 
 
 if __name__ == '__main__':
@@ -48,7 +55,8 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        node = "https://lambda-coin.herokuapp.com/api"
+        # node = "https://lambda-coin.herokuapp.com/api"
+        node = "https://lambda-coin-test-1.herokuapp.com/api"
 
     coins_mined = 0
 
@@ -78,3 +86,18 @@ if __name__ == '__main__':
             print("Total coins mined: " + str(coins_mined))
         else:
             print(data.get('message'))
+
+
+'''
+Plan
+proof_of_work:
+    
+    Needs to check if its valid in a while loop
+    pass values to the valid proof
+
+valid_proof:
+    check if its a valid proof prev_hash[-6:] == new_hash[:6]
+    There needs to be a new hash of the previous hash
+    the last 6 of prev_hash have to equal the first 6 of new_hash
+
+'''
