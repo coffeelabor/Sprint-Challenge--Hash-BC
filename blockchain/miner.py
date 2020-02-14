@@ -25,7 +25,10 @@ def proof_of_work(last_proof):
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
-    while valid_proof(prev_hash, proof) is False:
+    # While loop to increment the proof to keep mining
+    # while valid_proof(prev_hash, proof) is False: 
+    # while valid_proof(last_hash, proof) is False: 
+    while valid_proof(last_proof, proof) is False: 
         proof +=1 
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
@@ -44,19 +47,26 @@ def valid_proof(last_hash, proof):
     # TODO: Your code here!
     # Format the old hash
     old_hash_encode = f'{last_hash}'.encode()
-    old_hash_hash = hashlib.sha256()
+    old_hash_hash = hashlib.sha256(old_hash_encode).hexdigest()
 
-    guess_encode = f'{prev_hash}{proof}'.encode()
-    guess_hash = hashlib.sha256(guess_encode).hexidigest
+    # Format the new hash
+    # guess_encode = f'{prev_hash}{proof}'.encode()
+    guess_encode = f'{proof}'.encode()
+    guess_hash = hashlib.sha256(guess_encode).hexdigest()
 
+    # set the guess and old to the requirements for the proof
+    old_hash_six = old_hash_hash[-6:]
+    guess_hash_six = guess_hash[:6]
+
+    return old_hash_six == guess_hash_six
 
 if __name__ == '__main__':
     # What node are we interacting with?
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        # node = "https://lambda-coin.herokuapp.com/api"
-        node = "https://lambda-coin-test-1.herokuapp.com/api"
+        node = "https://lambda-coin.herokuapp.com/api"
+        # node = "https://lambda-coin-test-1.herokuapp.com/api"
 
     coins_mined = 0
 
