@@ -59,7 +59,6 @@ I can match up the flights by either looking forward to where destination is sou
         # they will be inserted with hash_table, key = source, value = destination)
         hash_table_insert(hashtable, ticket.source, ticket.destination)
     
-
     # Loop through the length of the trip
     # for index in range(length):
     for index in range(0, length):
